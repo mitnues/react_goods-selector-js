@@ -1,6 +1,6 @@
 import 'bulma/css/bulma.css';
 import './App.scss';
-import { use } from 'react';
+import { useState } from 'react'
 
 export const goods = [
   'Dumplings',
@@ -19,6 +19,14 @@ export const goods = [
     export const App = () => {
       const [selectedGood, setSelectedGood] = useState('Jam');
 
+      const handleSelectedGood = (good) => {
+        setSelectedGood(good);
+      };
+
+      const handleClearSelection = () => {
+        setSelectedGood('');
+      };
+
       return (
         <main className="section container">
           <h1 className="title is-flex is-align-items-center">
@@ -31,10 +39,11 @@ export const goods = [
                 data-cy="ClearButton"
                 type="button"
                 className="delete ml-3"
-                onClick={() => setSelectedGood('')}
+                onClick={handleClearSelection}
               />
             )}
             </h1>
+
           <table className="table">
             <tbody>
               {goods.map(good => {
@@ -42,7 +51,7 @@ export const goods = [
 
                 return (
                   <tr 
-                  hey={good}
+                  key={good}
                   data-cy="Good"
                   className={isSelected ? 'has-background-success-light' : ''}
                   >
@@ -52,7 +61,7 @@ export const goods = [
                         data-cy="AddButton"
                         type="button" 
                         className="button"
-                        onClick={() => setSelectedGood(good)}
+                        onClick={() => handleSelectedGood(good)}
                         >
                           +
                         </button>
@@ -63,7 +72,7 @@ export const goods = [
                         data-cy="RemoveButton"
                         type="button"
                         className="button is-info"
-                        onClick={() => setSelectedGood('')}
+                        onClick={handleClearSelection}
                         >
                           -
                         </button>
